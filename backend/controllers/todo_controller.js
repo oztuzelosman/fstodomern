@@ -18,13 +18,46 @@ const createNew = async (req, res) => {
   }
 };
 
-const getTaskWid = async (req, res) => {
+const getTodoWid = async (req, res) => {
   try {
-    const getTodoWid = await todo_models.findOne({ _id: req.params.id });
+    const todoWid = await todo_models.findOne({ _id: req.params.id });
     if (!getTodoWid) {
       return res.status(404).json({ msg: "no task with this id" });
     }
-    res.status(200).json({ success: true, data: getTodoWid });
+    res.status(200).json({ success: true, data: todoWid });
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
+};
+
+const updateTodoWid = async (req, res) => {
+  try {
+    const updTodoWid = await todo_models.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!updTodoWid) {
+      return res.status(404).json({ msg: "no task with this id" });
+    }
+    res.status(200).json({ success: true, msg: "updated", data: updTodoWid });
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
+};
+
+const deleteTodoWid = async (req, res) => {
+  try {
+    const delTodoWid = await todo_models.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (!delTodoWid) {
+      return res.status(404).json({ msg: "no task with this id" });
+    }
+    res.status(200).json({ success: true, data: delTodoWid });
   } catch (err) {
     res.status(500).json({ msg: err });
   }
@@ -33,5 +66,7 @@ const getTaskWid = async (req, res) => {
 module.exports = {
   getAll,
   createNew,
-  getTaskWid,
+  getTodoWid,
+  updateTodoWid,
+  deleteTodoWid,
 };

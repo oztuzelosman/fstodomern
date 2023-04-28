@@ -12,7 +12,7 @@ app.use("/api/v1/todos", todo_router);
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL);
-    app.listen(8080, () => {
+    app.listen(5000, () => {
       console.log("listening for mongo");
     });
   } catch (error) {

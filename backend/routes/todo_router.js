@@ -3,11 +3,15 @@ const router = express();
 const {
   getAll,
   createNew,
-  getTaskWid,
+  getTodoWid,
+  updateTodoWid,
+  deleteTodoWid,
 } = require("../controllers/todo_controller");
 
 router.get("/", getAll);
 router.post("/", createNew);
-router.get("/:id", getTaskWid);
+router.get("/:id", getTodoWid);
+router.patch("/:id", updateTodoWid);
+router.delete("/:id", deleteTodoWid);
 
 module.exports = router;
